@@ -3,10 +3,10 @@ import GameCard from "./GameCard";
 
 const GameList = () => {
   const games = [
-    { title: "TicTacToe", image: "/tictactoe.png" },
-    { title: "Memory", image: "/memory.png" },
-    { title: "Snakes and Ladders", image: "/snakes_and_ladders.png" },
-    { title: "Dots and Boxes", image: "/dots_and_boxes.png" },
+    { title: "TicTacToe", image: "/TicTacToe.jpg" },
+    { title: "Memory", image: "/Memory.jpg" },
+    { title: "Snakes and Ladders", image: "/SnakesLadders.jpg" },
+    { title: "Dots and Boxes", image: "/DotsBoxes.jpg" },
   ];
 
   return (
