@@ -10,7 +10,7 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:3000/api/signup`, userData)
+      .post(`http://localhost:3000/auth/signup`, userData)
       .then((response) => {
         console.log("Sign Up Successful:", response.data);
       })

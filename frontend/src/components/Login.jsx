@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export default function Login() {
@@ -9,7 +10,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:3000/api/login`, formData)
+      .post(`http://localhost:3000/auth/login`, formData)
       .then((response) => {
         console.log("Login Successful:", response.data);
       })
