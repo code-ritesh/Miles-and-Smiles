@@ -7,14 +7,10 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-   <div className="min-h-screen bg-[--bg] text-[--text] transition-colors duration-300">
-
-  <Navbar />
-  <GameList />
-</div>
-
-
-
+    <div className="min-h-screen bg-[--bg] text-[--text] transition-colors duration-300">
+      <Navbar />
+      <GameList />
+    </div>
   );
 }
 

@@ -4,7 +4,7 @@ import SignUp from "../components/SignUp.jsx";
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState("login");
-  const [message, setMessage] = useState(null); // { text: string, type: 'success'|'error'|'info' }
+  const [message, setMessage] = useState(null);
 
   return (
     <div className="flex justify-center items-center h-screen bg-(--bg)">
@@ -12,9 +12,21 @@ export default function Auth() {
         {message && (
           <div
             className={`mb-4 px-3 py-2 rounded-md text-sm border
-            ${message.type === "success" ? "bg-green-100 text-green-800 border-green-200" : ""}
-            ${message.type === "error" ? "bg-red-100 text-red-800 border-red-200" : ""}
-            ${message.type === "info" ? "bg-blue-100 text-blue-800 border-blue-200" : ""}
+            ${
+              message.type === "success"
+                ? "bg-green-100 text-green-800 border-green-200"
+                : ""
+            }
+            ${
+              message.type === "error"
+                ? "bg-red-100 text-red-800 border-red-200"
+                : ""
+            }
+            ${
+              message.type === "info"
+                ? "bg-blue-100 text-blue-800 border-blue-200"
+                : ""
+            }
           `}
           >
             {message.text}
@@ -44,7 +56,6 @@ export default function Auth() {
           </button>
         </div>
 
-        {/* Content Area */}
         <div className="transition-all duration-500 ease-in-out">
           {activeTab === "login" ? (
             <Login onMessage={setMessage} />

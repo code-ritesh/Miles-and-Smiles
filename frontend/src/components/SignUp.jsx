@@ -16,14 +16,19 @@ export default function SignUp({ onMessage }) {
       .post(`${VITE_BACKEND_SERVER}/auth/signup`, userData)
       .then((response) => {
         console.log("Sign Up Successful:", response.data);
-        onMessage && onMessage({ text: "Sign up successful! You can now log in.", type: "success" });
+        onMessage &&
+          onMessage({
+            text: "Sign up successful! You can now log in.",
+            type: "success",
+          });
       })
       .catch((error) => {
         console.error("Sign Up Error:", error);
-        onMessage && onMessage({
-          text: error.response?.data?.message || "Sign up failed",
-          type: "error",
-        });
+        onMessage &&
+          onMessage({
+            text: error.response?.data?.message || "Sign up failed",
+            type: "error",
+          });
       });
     console.log("Sign Up Data:", userData);
   };

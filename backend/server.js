@@ -21,7 +21,8 @@ process.on("SIGINT", async () => {
 });
 
 const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT || 3000;
-const BACKEND_SERVER_IP_ADDRESS = process.env.BACKEND_SERVER_IP_ADDRESS || "localhost";
+const BACKEND_SERVER_IP_ADDRESS =
+  process.env.BACKEND_SERVER_IP_ADDRESS || "localhost";
 
 const app = express();
 

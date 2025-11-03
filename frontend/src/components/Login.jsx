@@ -7,12 +7,11 @@ export default function Login({ onMessage }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
-
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // stop page reload
+    e.preventDefault();
 
     try {
       onMessage && onMessage({ text: "Logging in...", type: "info" });
@@ -23,21 +22,22 @@ export default function Login({ onMessage }) {
 
       console.log("Login Successful:", response.data);
 
-      // ✅ 1. Save token to localStorage
       localStorage.setItem("token", response.data.token);
-
-      // ✅ 2. Optionally save user info (like username)
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      // ✅ 3. Show success then redirect to home page
-      onMessage && onMessage({ text: "Login successful! Redirecting...", type: "success" });
+      onMessage &&
+        onMessage({
+          text: "Login successful! Redirecting...",
+          type: "success",
+        });
       navigate("/home");
     } catch (error) {
       console.error("Login Error:", error);
-      onMessage && onMessage({
-        text: error.response?.data?.message || "Login failed",
-        type: "error",
-      });
+      onMessage &&
+        onMessage({
+          text: error.response?.data?.message || "Login failed",
+          type: "error",
+        });
     }
 
     console.log("Login Data:", formData);

@@ -7,13 +7,12 @@ const GameCard = ({ image, title }) => {
     const path = "/games/" + title.toLowerCase().replace(/\s+/g, "-");
     navigate(path);
   };
-  
+
   return (
     <div
       onClick={handleClick}
       className="w-60 bg-[--card] text-[--text] rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
     >
-      {/* Game image */}
       <div className="w-full h-40 overflow-hidden rounded-t-xl">
         <img
           src={image}
@@ -22,7 +21,6 @@ const GameCard = ({ image, title }) => {
         />
       </div>
 
-      {/* Title area */}
       <div className="px-3 py-2 text-center bg-[--surface] transition-colors duration-300">
         <h2 className="text-base font-semibold text-[--text] truncate">
           {title}
