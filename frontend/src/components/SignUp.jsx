@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function SignUp() {
+const VITE_BACKEND_SERVER = import.meta.env.VITE_BACKEND_SERVER;
+
+export default function SignUp({ onMessage }) {
   const [userData, setUserData] = useState({ username: "", password: "" });
 
   const handleChange = (e) =>
@@ -9,13 +11,19 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    onMessage && onMessage({ text: "Signing up...", type: "info" });
     axios
-      .post(`http://localhost:3000/auth/signup`, userData)
+      .post(`${VITE_BACKEND_SERVER}/auth/signup`, userData)
       .then((response) => {
         console.log("Sign Up Successful:", response.data);
+        onMessage && onMessage({ text: "Sign up successful! You can now log in.", type: "success" });
       })
       .catch((error) => {
         console.error("Sign Up Error:", error);
+        onMessage && onMessage({
+          text: error.response?.data?.message || "Sign up failed",
+          type: "error",
+        });
       });
     console.log("Sign Up Data:", userData);
   };

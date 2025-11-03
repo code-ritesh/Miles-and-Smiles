@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+const VITE_BACKEND_SERVER = import.meta.env.VITE_BACKEND_SERVER;
 
-export default function Login() {
+export default function Login({ onMessage }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
@@ -14,8 +15,9 @@ export default function Login() {
     e.preventDefault(); // stop page reload
 
     try {
+      onMessage && onMessage({ text: "Logging in...", type: "info" });
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        `${VITE_BACKEND_SERVER}/auth/login`,
         formData
       );
 
@@ -27,11 +29,15 @@ export default function Login() {
       // ✅ 2. Optionally save user info (like username)
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      // ✅ 3. Redirect to home page
+      // ✅ 3. Show success then redirect to home page
+      onMessage && onMessage({ text: "Login successful! Redirecting...", type: "success" });
       navigate("/home");
     } catch (error) {
       console.error("Login Error:", error);
-      alert(error.response?.data?.message || "Login failed");
+      onMessage && onMessage({
+        text: error.response?.data?.message || "Login failed",
+        type: "error",
+      });
     }
 
     console.log("Login Data:", formData);

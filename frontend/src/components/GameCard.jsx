@@ -1,8 +1,18 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const GameCard = ({ image, title }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const path = "/games/" + title.toLowerCase().replace(/\s+/g, "-");
+    navigate(path);
+  };
+  
   return (
-    <div className="w-60 bg-[--card] text-[--text] rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+    <div
+      onClick={handleClick}
+      className="w-60 bg-[--card] text-[--text] rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+    >
       {/* Game image */}
       <div className="w-full h-40 overflow-hidden rounded-t-xl">
         <img
