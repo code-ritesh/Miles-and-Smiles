@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/Home.jsx";
 import Auth from "../pages/Auth.jsx";
-import TicTacToe from "../pages/TicTacToe.jsx";
+import GamePage from "../pages/GamePage.jsx";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
 
 
@@ -21,9 +21,10 @@ function AppRouter() {
         />
 
         <Route
-          path="/games/tictactoe" element={<TicTacToe />} 
+          path="/games/:gameSlug"
+          element={<GamePage />} 
         />
-        
+
       </Routes>
     </Router>
   );

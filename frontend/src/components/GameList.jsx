@@ -2,7 +2,7 @@ import GameCard from "./GameCard";
 
 const GameList = () => {
   const games = [
-    { title: "TicTacToe", image: "/TicTacToe.jpg" },
+    { title: "Tic Tac Toe", image: "/TicTacToe.jpg" },
     { title: "Memory", image: "/Memory.jpg" },
     { title: "Snakes and Ladders", image: "/SnakesLadders.jpg" },
     { title: "Dots and Boxes", image: "/DotsBoxes.jpg" },
