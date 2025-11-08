@@ -12,13 +12,14 @@ function AppRouter() {
 
         <Route
           path="/"
+          element={<Home />}
+        />
+        
+        <Route
+          path="/auth"
           element={<Auth />}
         />
 
-        <Route
-          path="/home"
-          element={<ProtectedRoute><Home /></ProtectedRoute>}
-        />
 
         <Route
           path="/games/:gameSlug"

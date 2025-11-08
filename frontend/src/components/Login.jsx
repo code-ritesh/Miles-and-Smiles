@@ -26,7 +26,7 @@ export default function Login({ onMessage }) {
           text: "Login successful! Redirecting...",
           type: "success",
         });
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.error("Login Error:", error);
       onMessage &&

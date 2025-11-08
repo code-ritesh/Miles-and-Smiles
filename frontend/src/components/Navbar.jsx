@@ -8,7 +8,9 @@ const Navbar = () => {
     () => localStorage.getItem("theme") === "dark"
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
+  // 🌙 Handle dark mode
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
@@ -20,21 +22,38 @@ const Navbar = () => {
     }
   }, [isDark]);
 
+  // ✅ Update login state on token change (like after login/logout)
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   const toggleTheme = () => setIsDark((prev) => !prev);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setIsLoggedIn(false);
     navigate("/");
+  };
+
+  const handleLogin = () => {
+    navigate("/auth");
   };
 
   return (
     <nav className="bg-(--surface) text-(--text) flex items-center justify-between px-4 md:px-6 py-3 shadow-md transition-colors duration-200 relative">
+      {/* Left: Logo */}
       <div className="flex items-center space-x-2 md:space-x-3">
         <img src="/logo.png" alt="logo" className="w-8 h-8 rounded" />
         <h1 className="font-semibold text-lg">Miles & Smiles</h1>
       </div>
 
+      {/* Center: Search bar (desktop) */}
       <div className="hidden md:flex items-center bg-(--card) rounded-full px-4 py-2 w-[40%] transition-colors duration-200">
         <input
           type="text"
@@ -44,6 +63,7 @@ const Navbar = () => {
         <Search className="text-(--muted)" size={18} />
       </div>
 
+      {/* Right: Buttons */}
       <div className="flex items-center space-x-3 md:space-x-4">
         <div className="hidden md:flex items-center space-x-4">
           <button className="p-2 hover:bg-(--card) rounded-full">
@@ -54,6 +74,7 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* Theme toggle */}
         <button
           onClick={toggleTheme}
           className="p-2 hover:bg-(--card) rounded-full"
@@ -65,19 +86,33 @@ const Navbar = () => {
           )}
         </button>
 
-        <img
-          src="/profile.png"
-          alt="profile"
-          className="w-8 h-8 rounded-full border-2 border-blue-400 hidden sm:block"
-        />
+        {/* Profile pic (if logged in) */}
+        {isLoggedIn && (
+          <img
+            src="/profile.png"
+            alt="profile"
+            className="w-8 h-8 rounded-full border-2 border-blue-400 hidden sm:block"
+          />
+        )}
 
-        <button
-          onClick={handleLogout}
-          className="hidden md:block bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md"
-        >
-          Logout
-        </button>
+        {/* 🔥 Conditional Login/Logout Button */}
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="hidden md:block bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md"
+          >
+            Logout
+          </button>
+        ) : (
+          <button
+            onClick={handleLogin}
+            className="hidden md:block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
+          >
+            Login
+          </button>
+        )}
 
+        {/* Mobile menu toggle */}
         <button
           onClick={toggleMenu}
           className="md:hidden p-2 hover:bg-(--card) rounded-full"
@@ -86,6 +121,7 @@ const Navbar = () => {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-full left-0 w-full bg-(--surface) border-t border-(--muted) flex flex-col items-center space-y-3 py-4 md:hidden transition-all duration-300">
           <div className="flex items-center bg-(--card) rounded-full px-4 py-2 w-[90%]">
@@ -106,12 +142,21 @@ const Navbar = () => {
             </button>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-md"
-          >
-            Logout
-          </button>
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-md"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={handleLogin}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-md"
+            >
+              Login
+            </button>
+          )}
         </div>
       )}
     </nav>
