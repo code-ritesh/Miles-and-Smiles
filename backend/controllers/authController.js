@@ -65,8 +65,7 @@ export async function login(req, res) {
     const safeUser = {
       id: user._id,
       username: user.username,
-      friends: user.friends,
-      favouriteGames: user.favouriteGames,
+      pfp_url: user.pfp_url,
     };
     return res
       .status(200)

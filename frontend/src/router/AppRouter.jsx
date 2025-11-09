@@ -4,28 +4,15 @@ import Auth from "../pages/Auth.jsx";
 import GamePage from "../pages/GamePage.jsx";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
 
-
 function AppRouter() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        
-        <Route
-          path="/auth"
-          element={<Auth />}
-        />
+        <Route path="/auth" element={<Auth />} />
 
-
-        <Route
-          path="/games/:gameSlug"
-          element={<GamePage />}
-        />
-
+        <Route path="/games/:gameSlug" element={<GamePage />} />
       </Routes>
     </Router>
   );
