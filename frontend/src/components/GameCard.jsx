@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Star , Heart} from "lucide-react";
+import { Star, Heart } from "lucide-react";
 import axiosClient from "../axiosClient.js";
 
 const GameCard = ({ image, title }) => {
@@ -24,7 +24,7 @@ const GameCard = ({ image, title }) => {
     const checkLoginState = () => {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
-      
+
       // Fetch user's favorite games if logged in
       if (token) {
         fetchFavorites();
@@ -76,7 +76,7 @@ const GameCard = ({ image, title }) => {
         gameTitle: title,
       });
       setIsFavorited(response.data.favouriteGames.includes(title));
-      
+
       // Dispatch event to notify GameList that favorites were updated
       window.dispatchEvent(new Event("favoritesUpdated"));
     } catch (error) {

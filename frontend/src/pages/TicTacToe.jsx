@@ -1,4 +1,4 @@
-import Chat from '../components/Chat'
+import Chat from "../components/Chat";
 
 function TicTacToe({ roomData }) {
   return (
@@ -14,7 +14,7 @@ function TicTacToe({ roomData }) {
         <Chat socket={roomData.socket} roomId={roomData.roomId} />
       )}
     </div>
-  )
+  );
 }
 
-export default TicTacToe
+export default TicTacToe;

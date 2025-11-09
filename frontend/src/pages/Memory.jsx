@@ -1,4 +1,4 @@
-import Chat from '../components/Chat'
+import Chat from "../components/Chat";
 
 function Memory({ roomData }) {
   return (
@@ -14,8 +14,7 @@ function Memory({ roomData }) {
         <Chat socket={roomData.socket} roomId={roomData.roomId} />
       )}
     </div>
-  )
+  );
 }
 
-export default Memory
-
+export default Memory;

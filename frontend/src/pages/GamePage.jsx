@@ -5,16 +5,18 @@ import ProtectedRoute from "../components/ProtectedRoute";
 
 // Game component mapping
 const gameComponents = {
-  "tic-tac-toe": () => import("../pages/TicTacToe").then(mod => mod.default),
-  "memory": () => import("../pages/Memory").then(mod => mod.default),
-  "snakes-and-ladders": () => import("../pages/SnakesAndLadders").then(mod => mod.default),
-  "dots-and-boxes": () => import("../pages/DotsAndBoxes").then(mod => mod.default),
+  "tic-tac-toe": () => import("../pages/TicTacToe").then((mod) => mod.default),
+  memory: () => import("../pages/Memory").then((mod) => mod.default),
+  "snakes-and-ladders": () =>
+    import("../pages/SnakesAndLadders").then((mod) => mod.default),
+  "dots-and-boxes": () =>
+    import("../pages/DotsAndBoxes").then((mod) => mod.default),
 };
 
 // Game name mapping (for display)
 const gameNames = {
   "tic-tac-toe": "Tic Tac Toe",
-  "memory": "Memory",
+  memory: "Memory",
   "snakes-and-ladders": "Snakes and Ladders",
   "dots-and-boxes": "Dots and Boxes",
 };
@@ -32,11 +34,13 @@ const GamePage = () => {
   useEffect(() => {
     const gameLoader = gameComponents[normalizedSlug];
     if (gameLoader) {
-      gameLoader().then((Component) => {
-        setGameComponent(() => Component);
-      }).catch((error) => {
-        console.error("Error loading game component:", error);
-      });
+      gameLoader()
+        .then((Component) => {
+          setGameComponent(() => Component);
+        })
+        .catch((error) => {
+          console.error("Error loading game component:", error);
+        });
     }
   }, [normalizedSlug]);
 
@@ -58,4 +62,3 @@ const GamePage = () => {
 };
 
 export default GamePage;
-

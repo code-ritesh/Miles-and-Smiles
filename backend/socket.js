@@ -19,7 +19,7 @@ function generateRoomCode() {
 // Socket authentication middleware
 function authenticateSocket(socket, next) {
   const token = socket.handshake.auth?.token;
-  
+
   if (!token) {
     console.error("❌ Socket auth failed: No token provided");
     return next(new Error("Authentication error: No token provided"));
@@ -54,8 +54,10 @@ export default function setupSocket(server) {
     // Handle room creation
     socket.on("create-room", ({ gameName }, callback) => {
       try {
-        console.log(`Create room request from ${socket.username} for game: ${gameName}`);
-        
+        console.log(
+          `Create room request from ${socket.username} for game: ${gameName}`
+        );
+
         if (!gameName) {
           console.error("No gameName provided");
           const errorMsg = "Game name is required";
@@ -94,11 +96,13 @@ export default function setupSocket(server) {
         socket.join(roomId);
         socket.currentRoom = roomId;
 
-        console.log(`✅ Room created: ${roomId} by ${socket.username} for game ${gameName}`);
-        
+        console.log(
+          `✅ Room created: ${roomId} by ${socket.username} for game ${gameName}`
+        );
+
         // Acknowledge receipt
         if (callback) callback({ success: true });
-        
+
         // Emit room created event
         socket.emit("room-created", { roomId, gameName });
       } catch (error) {
@@ -120,7 +124,9 @@ export default function setupSocket(server) {
         }
 
         if (room.gameName !== gameName) {
-          socket.emit("room-error", { message: "Room is for a different game" });
+          socket.emit("room-error", {
+            message: "Room is for a different game",
+          });
           return;
         }
 
@@ -133,7 +139,9 @@ export default function setupSocket(server) {
         // Check if user is already in the room
         const alreadyInRoom = room.players.some((p) => p.id === socket.userId);
         if (alreadyInRoom) {
-          socket.emit("room-error", { message: "You are already in this room" });
+          socket.emit("room-error", {
+            message: "You are already in this room",
+          });
           return;
         }
 
@@ -172,7 +180,7 @@ export default function setupSocket(server) {
         const room = rooms.get(roomId);
         if (room) {
           room.players = room.players.filter((p) => p.socketId !== socket.id);
-          
+
           if (room.players.length === 0) {
             // Delete room if empty
             rooms.delete(roomId);
@@ -207,14 +215,20 @@ export default function setupSocket(server) {
         }
 
         // Validate message
-        if (!message || typeof message !== "string" || message.trim().length === 0) {
+        if (
+          !message ||
+          typeof message !== "string" ||
+          message.trim().length === 0
+        ) {
           socket.emit("chat-error", { message: "Message cannot be empty" });
           return;
         }
 
         // Limit message length
         if (message.length > 500) {
-          socket.emit("chat-error", { message: "Message too long (max 500 characters)" });
+          socket.emit("chat-error", {
+            message: "Message too long (max 500 characters)",
+          });
           return;
         }
 
@@ -227,7 +241,9 @@ export default function setupSocket(server) {
           timestamp: new Date().toISOString(),
         };
 
-        console.log(`💬 Chat message in room ${roomId} from ${socket.username}: ${message}`);
+        console.log(
+          `💬 Chat message in room ${roomId} from ${socket.username}: ${message}`
+        );
 
         // Broadcast to all players in the room
         io.to(roomId).emit("chat-message", chatData);
@@ -246,10 +262,12 @@ export default function setupSocket(server) {
         const room = rooms.get(socket.currentRoom);
         if (room) {
           room.players = room.players.filter((p) => p.socketId !== socket.id);
-          
+
           if (room.players.length === 0) {
             rooms.delete(socket.currentRoom);
-            console.log(`Room ${socket.currentRoom} deleted (empty after disconnect)`);
+            console.log(
+              `Room ${socket.currentRoom} deleted (empty after disconnect)`
+            );
           } else {
             socket.to(socket.currentRoom).emit("player-left", {
               player: {

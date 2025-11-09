@@ -20,7 +20,7 @@ const GameList = () => {
       } catch (error) {
         console.error("❌ Error fetching games:", error);
       }
-    };
+    }
 
     fetchGames();
   }, []);
@@ -83,7 +83,10 @@ const GameList = () => {
       }
     };
 
-    window.addEventListener("favoritesFilterChange", handleFavoritesFilterChange);
+    window.addEventListener(
+      "favoritesFilterChange",
+      handleFavoritesFilterChange
+    );
     window.addEventListener("favoritesUpdated", handleFavoritesUpdate);
 
     // Check login state
@@ -94,7 +97,10 @@ const GameList = () => {
     window.addEventListener("storage", checkLoginState);
 
     return () => {
-      window.removeEventListener("favoritesFilterChange", handleFavoritesFilterChange);
+      window.removeEventListener(
+        "favoritesFilterChange",
+        handleFavoritesFilterChange
+      );
       window.removeEventListener("favoritesUpdated", handleFavoritesUpdate);
       window.removeEventListener("loginStateChange", checkLoginState);
       window.removeEventListener("storage", checkLoginState);
@@ -102,9 +108,10 @@ const GameList = () => {
   }, [isLoggedIn]);
 
   // Filter games based on showFavoritesOnly state
-  const displayedGames = showFavoritesOnly && isLoggedIn
-    ? allGames.filter((game) => favoriteGames.includes(game.title))
-    : allGames;
+  const displayedGames =
+    showFavoritesOnly && isLoggedIn
+      ? allGames.filter((game) => favoriteGames.includes(game.title))
+      : allGames;
 
   return (
     <div className="w-full px-4 py-8 flex gap-6 flex-wrap justify-center">
@@ -114,7 +121,9 @@ const GameList = () => {
         ))
       ) : showFavoritesOnly && isLoggedIn ? (
         <div className="w-full text-center py-12">
-          <p className="text-[--muted] text-lg">No favorite games yet. Start adding some!</p>
+          <p className="text-[--muted] text-lg">
+            No favorite games yet. Start adding some!
+          </p>
         </div>
       ) : null}
     </div>

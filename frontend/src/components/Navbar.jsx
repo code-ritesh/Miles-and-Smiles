@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
+  const [isDark, setIsDark] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(
@@ -202,7 +204,9 @@ const Navbar = () => {
               onClick={handleFavoritesToggle}
               className="p-2 hover:bg-(--card) rounded-full cursor-pointer"
               title={
-                showFavoritesOnly ? "Show all games" : "Show favorite games only"
+                showFavoritesOnly
+                  ? "Show all games"
+                  : "Show favorite games only"
               }
             >
               <Heart

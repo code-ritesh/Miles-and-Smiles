@@ -1,10 +1,10 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Socket authentication middleware
 export function authenticateSocket(socket, next) {
   const token = socket.handshake.auth?.token;
-  
+
   if (!token) {
     console.error("❌ Socket auth failed: No token provided");
     return next(new Error("Authentication error: No token provided"));
@@ -21,4 +21,3 @@ export function authenticateSocket(socket, next) {
     return next(new Error("Authentication error: Invalid token"));
   }
 }
-

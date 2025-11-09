@@ -1,6 +1,5 @@
 import Game from "../models/game.js";
 
-// GET /api/games
 export const getAllGames = async (req, res) => {
   try {
     const games = await Game.find();

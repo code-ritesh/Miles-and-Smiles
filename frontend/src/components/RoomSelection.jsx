@@ -19,7 +19,7 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
   useEffect(() => {
     const serverUrl = VITE_BACKEND_SERVER?.replace(/\/$/, "");
     console.log("Connecting to socket server:", serverUrl);
-    
+
     const newSocket = io(serverUrl, {
       auth: {
         token: localStorage.getItem("token"),
@@ -115,7 +115,7 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
     setError("");
     setLoading(true);
     console.log("Emitting create-room event with gameName:", gameName);
-    
+
     // Emit with acknowledgment to verify server received it
     socket.emit("create-room", { gameName }, (response) => {
       if (response?.error) {
@@ -130,7 +130,7 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
         console.log("Server acknowledged create-room request");
       }
     });
-    
+
     // Add timeout in case server doesn't respond
     timeoutRef.current = setTimeout(() => {
       setLoading((prevLoading) => {
@@ -167,36 +167,38 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
   if (mode === null) {
     return (
       <>
-      <Navbar />
-      <div className="min-h-screen bg-[--bg] text-[--text] flex items-center justify-center p-4">
-        <div className="bg-[--card] rounded-xl shadow-lg p-8 max-w-md w-full border border-gray-200">
-          <h1 className="text-3xl font-bold text-center mb-2">{gameName}</h1>
-          <p className="text-center text-gray-600 mb-8">Choose an option to start playing</p>
-          
-          <div className="space-y-4">
-            <button
-              onClick={() => setMode("create")}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-            >
-              Create Room
-            </button>
-            
-            <button
-              onClick={() => setMode("join")}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-            >
-              Join Room
-            </button>
-            
-            <button
-              onClick={handleBack}
-              className="w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
-            >
-              Back to Home
-            </button>
+        <Navbar />
+        <div className="min-h-screen bg-[--bg] text-[--text] flex items-center justify-center p-4">
+          <div className="bg-[--card] rounded-xl shadow-lg p-8 max-w-md w-full border border-gray-200">
+            <h1 className="text-3xl font-bold text-center mb-2">{gameName}</h1>
+            <p className="text-center text-gray-600 mb-8">
+              Choose an option to start playing
+            </p>
+
+            <div className="space-y-4">
+              <button
+                onClick={() => setMode("create")}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              >
+                Create Room
+              </button>
+
+              <button
+                onClick={() => setMode("join")}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              >
+                Join Room
+              </button>
+
+              <button
+                onClick={handleBack}
+                className="w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              >
+                Back to Home
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       </>
     );
   }
@@ -215,10 +217,16 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
               <>
                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-center">
                   <p className="text-sm text-gray-600 mb-2">Room created!</p>
-                  <p className="text-2xl font-bold text-green-700 font-mono">{createdRoomCode}</p>
-                  <p className="text-xs text-gray-500 mt-2">Share this code with your friend</p>
+                  <p className="text-2xl font-bold text-green-700 font-mono">
+                    {createdRoomCode}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Share this code with your friend
+                  </p>
                 </div>
-                <p className="text-sm text-center text-gray-600">Loading game...</p>
+                <p className="text-sm text-center text-gray-600">
+                  Loading game...
+                </p>
               </>
             ) : (
               <>
@@ -227,9 +235,13 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
                   disabled={loading || !socket?.connected}
                   className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
                 >
-                  {loading ? "Creating Room..." : socket?.connected ? "Create Room" : "Connecting..."}
+                  {loading
+                    ? "Creating Room..."
+                    : socket?.connected
+                    ? "Create Room"
+                    : "Connecting..."}
                 </button>
-                
+
                 <button
                   onClick={() => {
                     setMode(null);
@@ -254,15 +266,19 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
               maxLength={6}
               disabled={loading}
             />
-            
+
             <button
               onClick={handleJoinRoom}
               disabled={loading || !socket?.connected || !roomCode.trim()}
               className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
             >
-              {loading ? "Joining Room..." : socket?.connected ? "Join Room" : "Connecting..."}
+              {loading
+                ? "Joining Room..."
+                : socket?.connected
+                ? "Join Room"
+                : "Connecting..."}
             </button>
-            
+
             <button
               onClick={() => {
                 setMode(null);
@@ -287,4 +303,3 @@ const RoomSelection = ({ gameName, onRoomJoined }) => {
 };
 
 export default RoomSelection;
-

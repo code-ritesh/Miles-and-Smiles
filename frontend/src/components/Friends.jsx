@@ -1,14 +1,12 @@
 import { useState, useMemo } from "react";
 import { Search, Check, X } from "lucide-react";
 
-const Friends = (
-  {
-  friends = [],                // array of strings e.g. ["Suchet", "Tejas"]
-  incomingRequests = [],       // array of strings e.g. ["Uday", "Aarya"]
+const Friends = ({
+  friends = [],
+  incomingRequests = [],
   onAccept = () => {},
   onReject = () => {},
-  }
-) => {
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredFriends = useMemo(() => {

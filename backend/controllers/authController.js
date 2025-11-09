@@ -18,6 +18,7 @@ export async function signup(req, res) {
       return res.status(409).json({ message: "Username already exists." });
     }
 
+    console.log(username + " wants to sign up on your website");
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ username: username, password: hashed });
     await user.save();
@@ -61,7 +62,12 @@ export async function login(req, res) {
       }
     );
 
-    const safeUser = { id: user._id, username: user.username, friends: user.friends, favouriteGames: user.favouriteGames };
+    const safeUser = {
+      id: user._id,
+      username: user.username,
+      friends: user.friends,
+      favouriteGames: user.favouriteGames,
+    };
     return res
       .status(200)
       .json({ message: "Login successful", token: token, user: safeUser });

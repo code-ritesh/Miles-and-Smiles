@@ -13,8 +13,8 @@ export function verifyToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // save decoded user info for later
-    next(); // continue to the protected route
+    req.user = decoded;
+    next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid or expired token." });
   }

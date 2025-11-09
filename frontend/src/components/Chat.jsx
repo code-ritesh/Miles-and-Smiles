@@ -8,7 +8,6 @@ const Chat = ({ socket, roomId }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Get current user from localStorage
   useEffect(() => {
     const userStr = localStorage.getItem("user");
     if (userStr) {
@@ -91,7 +90,7 @@ const Chat = ({ socket, roomId }) => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    
+
     if (!inputMessage.trim() || !socket || !socket.connected) {
       return;
     }
@@ -130,12 +129,32 @@ const Chat = ({ socket, roomId }) => {
           }}
         >
           {isOpen ? (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           ) : (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
             </svg>
           )}
         </button>
@@ -153,7 +172,11 @@ const Chat = ({ socket, roomId }) => {
                 <div
                   key={msg.id}
                   className={`flex flex-col ${
-                    isSystem ? "items-center" : isOwnMessage ? "items-end" : "items-start"
+                    isSystem
+                      ? "items-center"
+                      : isOwnMessage
+                      ? "items-end"
+                      : "items-start"
                   }`}
                 >
                   <div
@@ -173,7 +196,11 @@ const Chat = ({ socket, roomId }) => {
                     <div className="break-words">{msg.message}</div>
                     <div
                       className={`text-xs mt-1 ${
-                        isSystem ? "text-gray-500" : isOwnMessage ? "text-blue-100" : "text-gray-500"
+                        isSystem
+                          ? "text-gray-500"
+                          : isOwnMessage
+                          ? "text-blue-100"
+                          : "text-gray-500"
                       }`}
                     >
                       {formatTime(msg.timestamp)}
@@ -186,7 +213,10 @@ const Chat = ({ socket, roomId }) => {
           </div>
 
           {/* Chat Input */}
-          <form onSubmit={handleSendMessage} className="p-3 border-t border-gray-200">
+          <form
+            onSubmit={handleSendMessage}
+            className="p-3 border-t border-gray-200"
+          >
             <div className="flex gap-2">
               <input
                 ref={inputRef}
@@ -214,4 +244,3 @@ const Chat = ({ socket, roomId }) => {
 };
 
 export default Chat;
-
